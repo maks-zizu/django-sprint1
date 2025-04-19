@@ -44,21 +44,26 @@ posts = [
     },
 ]
 
+
 def get_post_or_404(post_id):
     for post in posts:
         if post['id'] == post_id:
             return post
     raise Http404("Post not found")
 
+
 def index(request):
     return render(request, 'blog/index.html', {'posts': list(reversed(posts))})
+
 
 def post_detail(request, id):
     post = get_post_or_404(id)
     print("🚀 ~ post:", post)
     return render(request, 'blog/detail.html', {'post': post})
 
-def category_posts(request, category_slug):
-    filtered_posts = [post for post in posts if post['category'] == category_slug]
-    return render(request, 'blog/category.html', {'posts': filtered_posts, 'category': category_slug})
 
+def category_posts(request, category_slug):
+    filtered_posts = [
+        post for post in posts if post['category'] == category_slug]
+    return render(request, 'blog/category.html',
+                  {'posts': filtered_posts, 'category': category_slug})
